@@ -96,28 +96,68 @@ Finalmente, ya se puede ejecutar la función *trainModel()* de *trainCell.py* qu
 
 
 ### Ejecución de la aplicación en el sistema local 
-La ejecución de **CellCountApp** es realmente sencilla. Dentro del entorno virtual, se deberá ejecutar el código *CellCountApp.py* contenido en **App** que abrirá una ventana de **Tkinker** donde aparecen los botones *Cargar imagen* y *Cerrar imagen* como en la siguiente imagen:
-
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/93343403/228200416-95f98ff9-4917-4374-82d0-20fcbd0d2b13.png" width="40%" height="40%">
-</p>
-
-
-Al pulsar en *Cargar imagen*, se puede elegir cualquier imagen por ejemplo de la carpeta de validación contenida en *Code/trainingCell/dataset/images/val* y se mostrarán tanto la imagen sin procesar como la imagen con los *bounding boxes* predichos por la red neuronal *yolov5s_cells1.onnx*. Después, se puede pulsar en el botón de cerrar para cargar una nueva imagen. 
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/93343403/228200340-0c8efc8c-9271-427e-a6b6-9ca114077f1a.png" width="40%" height="40%">
-</p>
+La ejecución de **CellCountApp** en el sistema local es realmente sencilla. Dentro del entorno virtual ya construido con el archivo *requirements.txt*, se deberá ejecutar el código *CellCountApp.py* contenido en **App** que abrirá una ventana de **Tkinker**, pudiendo visualizar la interfaz gráfica. Pulsando en el botón *Cargar imagen* y seleccionando la imagen para la predicción de la carpeta *Code/trainingCell/dataset/images/val*, se podrá visualizar la imagen sin procesar y la imagen con las detecciones ya realizadas mediante los *bounding boxes*, el número total de detecciones y el nivel de confianza. Después, se puede pulsar en el botón de *Cerrar imagen* para cargar una nueva. 
 
 ### Ejecución de los tests unitarios
 Para poder probar el funcionamiento de los tests, dentro de la carpeta **Tests** se debe ejecutar el código *run_tests.py*. En la línea de comandos se mostrará información sobre si los tests se han pasado con éxito o ha habido algún fallo en la ejecución. 
 
 
 ## Instalación de la aplicación con Docker 
+Para poder ejecutar la aplicación con Docker, es necesario construir o descargar la imagen **cellprojectdocker**. Si se desea constuir la imagen desde el principio utilizando este respositorio de GitHub, el procedimiento es el siguiente: 
+
+1. Clonación de este respositorio e instalación de la aplicación Docker. 
+2. Dentro del directorio **Docker** del respositorio, ejecución del comando: 
+
+<code>docker build –t cellprojectdocker .</code>
+
+3. Instalación y configuración de VcXsrv para poder visualizar la interfaz gráfica, tal como se ve en las siguientes imágenes:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/93343403/232859367-5b5bb89b-1a55-4321-8255-f0cb9ff2541f.png" width="30%" height="30%">
+
+<img src="https://user-images.githubusercontent.com/93343403/232859384-94a7077c-f626-4ded-8b83-4b7b90568385.png" width="30%" height="30%">
+
+<img src="https://user-images.githubusercontent.com/93343403/232859391-5cfda00e-b2e4-4079-bee5-d393322f7775.png" width="30%" height="30%">
+</p>
 
 
-## Interfaz gráfica 
+Esta aplicación se ejecuta en segundo plano y las pantallas generadas por *cellprojectdocker* serán derivadas a dicho servidor. 
+
+4. Ejecución del contenedor con el comando: 
+
+<code>docker run -it -e DISPLAY=host.docker.internal:0 cellprojectdocker</code>
+
+Si se desea descargar la imagen de Docker directamente, se puede ir a la dirección de DockerHub: https://hub.docker.com/r/esthervera/cellprojectdocker y descargar la última versión con: 
+
+<code>docker pull esthervera/cellprojectdocker</code>  
+
+O la versión según la etiqueta TAG correspondiente: 
+
+<code>docker pull esthervera/cellprojectdocker:TAG</code>  
+
+Después, ya se puede ejecutar la aplicación con los pasos 3 y 4 anteriores. 
+
+## Interfaz gráfica CellCountApp
+Al ejecutar **CellCountApp**, ya sea desde el directorio **App** o utilizando la imagen **cellprojectdocker**, la interfaz mostrada es la siguiente:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/93343403/232857367-1009b9a0-a231-42c1-8e9f-3c2bbd58dc42.png" width="60%" height="60%">
+</p>
+
+Donde se puede ver que pulsando el botón *Cargar imagen* y seleccionando una imagen del directorio */images* del contenedor, se puede visualizar la detección de células: 
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/93343403/232857613-7dd9b847-33b1-4b18-b0a0-6845f4134a73.png" width="60%" height="60%">
+</p>
+
+Se observa que la aplicación ofrece la imagen procesada con los bonuding boxes y el nivel de confianza para cada detección. Este último parámetro puede modificarse para poder ver más o menos predicciones: 
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/93343403/232857674-495cc163-c77d-406c-a1bf-5163310eb8bd.png" width="60%" height="60%">
+</p>
+
+Pulsando el botón *Cerrar imagen*, la interfaz vuelve a su estado inicial, pudiendo comenzar un nuevo procesamiento. 
+
 
 
 
